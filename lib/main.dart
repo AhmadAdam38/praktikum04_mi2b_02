@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   TextEditingController _adam=TextEditingController();
-
+  List<String> listSatuanSuhu = ["Kelvin","Reamur","Fahrenheit"];
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -72,20 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
             DropdownButton(
               isExpanded: true,
               value:"Fahrenheit",
-              items: [
-                DropdownMenuItem( 
-                  child: Text('Fahrenheit'),
-                  value:'Fahrenheit',
-                ),
-                DropdownMenuItem( 
-                  child: Text('Kelvin'),
-                  value:'Kelvin',
-                ),
-                DropdownMenuItem( 
-                  child: Text('Reamur'),
-                  value:'Reamur',
-                ),
-              ], 
+              items: listSatuanSuhu.map((String value){
+                return DropdownMenuItem<String>(
+                value:value,
+                child:Text(value),
+                );
+              }).toList(), 
               onChanged: (value){}
               ),
               SizedBox(height: 10),
