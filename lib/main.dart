@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:praktikum04_mi2b_02/widged/KonversiSuhu.dart';
+import 'package:praktikum04_mi2b_02/widged/PerhitunganTerakhir.dart';
+import 'package:praktikum04_mi2b_02/widged/RiwayatPerhitungan.dart';
+import 'package:praktikum04_mi2b_02/widged/TargetPerhitungan.dart';
+import 'package:praktikum04_mi2b_02/widged/inputSuhu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,11 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
   double hasilPerhitungan = 0.0;
   List<String> listHasil=[];
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
   void onDropdownChanged(Object? value) {
     return setState(() {
                 selectedDropdown=value.toString();
@@ -92,28 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: EdgeInsets.all(8),
         child: Column(
           children: [
-            TextField(
-              controller: _adam,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly ],
-              decoration: InputDecoration(
-                labelText: 'Celcius',
-                hintText: 'Enter the temperature in celcius',
-              ),
-            ),
+            inputSuhu(adam: _adam),
             SizedBox(height:8),
-            DropdownButton(  
-              isExpanded: true,
-              value:selectedDropdown,
-              items: listSatuanSuhu.map((String value){
-                return DropdownMenuItem<String>(
-                value:value,
-                child:Text(value),
-                );
-              }).toList(), 
-              onChanged: (value){
-                onDropdownChanged(value);
-              }
+            TargetPerhitungan(
+              selectedDropdown: selectedDropdown, 
+              listSatuanSuhu: listSatuanSuhu,
+              onDropdownChanged: onDropdownChanged,
               ),
               SizedBox(height: 10),
               Text("Hasil",
@@ -121,22 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 20
                 ),
               ),
-              Text("$hasilPerhitungan",
-              style: TextStyle(fontSize:32),
-              ),
+              perhitunganTerakhir(hasilPerhitungan: hasilPerhitungan),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: (){
-                        konversiSuhu();
-                      },
-                      child: Text("Konversi Suhu"),
-                    ),
-                  ),
-                ],
-              ),
+              KonversiSuhu(onPressed: konversiSuhu,),
               SizedBox(height: 10),
               Text("Riwayat Konversi",
               style: TextStyle(
@@ -144,21 +115,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: listHasil.length,
-                  itemBuilder: (context, index) {
-                  return Text(listHasil[index]);
-                }),
-              ),   
+              riwayatPerhitungan(listHasil: listHasil),   
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
     );
   }  
 }
+
+
+
+
+
+
+
+
+
