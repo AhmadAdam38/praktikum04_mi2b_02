@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _adam=TextEditingController();
   List<String> listSatuanSuhu = ["Kelvin","Reamur","Fahrenheit"];
   String selectedDropdown="Kelvin";
-  int hasilPerhitungan = 0;
+  double hasilPerhitungan = 0.0;
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -56,7 +56,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 selectedDropdown=value.toString();
               });
   }
-
+  void konversiSuhu() {
+    return setState(() {
+      if(_adam.text.isNotEmpty){
+      switch (selectedDropdown) {
+        case "Kelvin":
+        hasilPerhitungan=
+        int.parse(_adam.text)+273.15;                              
+          break;
+        case "Reamur":
+        hasilPerhitungan=
+        int.parse(_adam.text)*4/5;                              
+          break;
+        case "Fahrenheit":
+        hasilPerhitungan=
+        (int.parse(_adam.text)*9/5)+32;                              
+          break;
+        default:
+      }
+      }
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
 
@@ -107,17 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: (){
-                        setState(() {
-                          if(_adam.text.isNotEmpty){
-                          hasilPerhitungan=int.parse(_adam.text)*2;
-                          switch (selectedDropdown) {
-                            case "Kelvin":
-                              
-                              break;
-                            default:
-                          }
-                          }
-                        });
+                        konversiSuhu();
                       },
                       child: Text("Konversi Suhu"),
                     ),
@@ -138,5 +149,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), 
     );
-  }
+  }  
 }
