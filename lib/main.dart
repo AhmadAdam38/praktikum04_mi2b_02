@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _adam=TextEditingController();
   List<String> listSatuanSuhu = ["Kelvin","Reamur","Fahrenheit"];
   String selectedDropdown="Kelvin";
-    void _incrementCounter() {
+  int hasilPerhitungan = 0;
+  void _incrementCounter() {
     setState(() {
       _counter++;
     });
@@ -69,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: _adam,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly ],
               decoration: InputDecoration(
                 labelText: 'Celcius',
                 hintText: 'Enter the temperature in celcius',
@@ -94,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 20
                 ),
               ),
-              Text("365",
+              Text("$hasilPerhitungan",
               style: TextStyle(fontSize:32),
               ),
               SizedBox(height: 10),
@@ -102,7 +106,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        setState(() {
+                          if(_adam.text.isNotEmpty){
+                          hasilPerhitungan=int.parse(_adam.text)*2;
+                          switch (selectedDropdown) {
+                            case "Kelvin":
+                              
+                              break;
+                            default:
+                          }
+                          }
+                        });
+                      },
                       child: Text("Konversi Suhu"),
                     ),
                   ),
