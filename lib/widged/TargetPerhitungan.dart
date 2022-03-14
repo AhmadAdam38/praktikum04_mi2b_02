@@ -5,12 +5,14 @@ class TargetPerhitungan extends StatelessWidget {
     Key? key,
     required this.selectedDropdown,
     required this.listSatuanSuhu, 
-    required this.onDropdownChanged,
+    required this.onDropdownChanged, 
+    required this.konversiSuhu,
   }) : super(key: key);
 
   final String selectedDropdown;
   final List<String> listSatuanSuhu;
   final Function onDropdownChanged;
+  final Function konversiSuhu;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class TargetPerhitungan extends StatelessWidget {
       }).toList(), 
       onChanged: (value){
         onDropdownChanged(value);
+        konversiSuhu();
       }
       );
   }
