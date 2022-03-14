@@ -41,11 +41,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
   TextEditingController _adam=TextEditingController();
   List<String> listSatuanSuhu = ["Kelvin","Reamur","Fahrenheit"];
   String selectedDropdown="Kelvin";
   double hasilPerhitungan = 0.0;
+  List<String> listHasil=[];
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -72,12 +73,13 @@ class _MyHomePageState extends State<MyHomePage> {
         hasilPerhitungan=
         (int.parse(_adam.text)*9/5)+32;                              
           break;
-        default:
       }
+      listHasil.add("Konversi dari "+_adam.text+" Celsius ke "
+      +selectedDropdown+" Dengan Hasil : "+hasilPerhitungan.toString());
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
 
@@ -136,10 +138,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               SizedBox(height: 10),
-              Text("Riwayat Konversi",style: TextStyle(
+              Text("Riwayat Konversi",
+              style: TextStyle(
                 fontSize: 20
                 ),
-              ), 
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: listHasil.length,
+                  itemBuilder: (context, index) {
+                  return Text(listHasil[index]);
+                }),
+              ),   
           ],
         ),
       ),
