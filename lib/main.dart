@@ -43,10 +43,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController _adam=TextEditingController();
   List<String> listSatuanSuhu = ["Kelvin","Reamur","Fahrenheit"];
-  void _incrementCounter() {
+  String selectedDropdown="Kelvin";
+    void _incrementCounter() {
     setState(() {
       _counter++;
     });
+  }
+  void onDropdownChanged(Object? value) {
+    return setState(() {
+                selectedDropdown=value.toString();
+              });
   }
 
   @override
@@ -69,16 +75,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(height:8),
-            DropdownButton(
+            DropdownButton(  
               isExpanded: true,
-              value:"Fahrenheit",
+              value:selectedDropdown,
               items: listSatuanSuhu.map((String value){
                 return DropdownMenuItem<String>(
                 value:value,
                 child:Text(value),
                 );
               }).toList(), 
-              onChanged: (value){}
+              onChanged: (value){
+                onDropdownChanged(value);
+              }
               ),
               SizedBox(height: 10),
               Text("Hasil",
